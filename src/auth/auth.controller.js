@@ -1,4 +1,7 @@
-import { verifyPassword } from "../config/plugins/encripted-password.plugin.js";
+import {
+  encryptedPassword,
+  verifyPassword,
+} from "../config/plugins/encripted-password.plugin.js";
 import generateJWT from "../config/plugins/generate-JWT.plugin.js";
 import { AppError, catchAsync } from "../errors/index.js";
 import { validateLogin, validateRegister } from "./auth.schema.js";
@@ -78,3 +81,41 @@ export const register = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+export const changePassword = catchAsync(async (req, res, next) => {
+  const { sessionUser } = req;
+
+  const { currentPassword, newPassword } = req.body;
+
+  if (currentPassword === newPassword) {
+    return next(new AppError("The password connot be equals", 400));
+  }
+
+  const isCorrectPassword = await verifyPassword(
+    currentPassword,
+    sessionUser.password
+  );
+
+  if (!isCorrectPassword) {
+    return next(new AppError("Incorrect email or password", 401));
+  }
+
+  const hashedNewPassword = await encryptedPassword(newPassword);
+
+  await authService.updateUser(sessionUser, {
+    password: hashedNewPassword,
+    changedPasswordAt: new Date(),
+  });
+
+  return res.status(200).json({
+    message: 'The user password was updated successfully'
+  })
+});
+
+export const deleteAccount = catchAsync( async (req, res, next) => {
+  const { user } = req;
+
+  await authService.deleteUser(user)
+
+  res.status(204).json(null)
+})
