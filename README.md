@@ -12,7 +12,7 @@ npm install
 3. clonar el archivo `.env.template` y renombraro a `.env` y agregar 
 las variables de entorno
 
-4. ejecutar el comando: 
+4. ejecutar el siguiente comando para levantar la base de datos: 
 ```
 docker-compose up -d
 
