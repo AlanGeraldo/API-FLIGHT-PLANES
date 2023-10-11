@@ -24,7 +24,8 @@ const Flight = sequelize.define('flight', {
 
     planeId: {
         type: DataTypes.INTEGER,
-        field: 'plane_id'
+        field: 'plane_id',
+        allowNull: true
     },
 
     departureTime: {
@@ -35,7 +36,8 @@ const Flight = sequelize.define('flight', {
     
     checkIn: {
         type: DataTypes.DATE,
-        field: 'check_in'
+        field: 'check_in',
+        allowNull: true,
     }, 
 
     status: {
