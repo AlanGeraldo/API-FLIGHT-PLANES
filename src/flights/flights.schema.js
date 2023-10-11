@@ -10,7 +10,7 @@ export const flightSchema = z.object({
 
   departureTime: z.string(),
 
-  checkIn: z.string(),
+  checkIn: z.date().optional(),
 });
 
 export function validateFlight (data) {
