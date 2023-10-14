@@ -13,6 +13,7 @@ export class CityService {
     return await City.findOne({
       where: {
         id,
+        status: true
       },
     });
   }

@@ -1,11 +1,13 @@
 import Flight from "./flights.model.js";
+import { Op } from "sequelize";
 
 export class FlightService {
-
   async findAllFlights() {
     return await Flight.findAll({
       where: {
-        status: "pending",
+        status: {
+          [Op.notIn]: ["done", "cancelled"],
+        },
       },
     });
   }
@@ -14,12 +16,20 @@ export class FlightService {
     return await Flight.create(data);
   }
 
-  async findOneFlight(id) {
+  async findOneFlight(id, status) {
+    let whereClause = {
+      id: id,
+      status: status,
+    };
+
+    if (!status) {
+      whereClause.status = {
+        [Op.in]: ["pending", "inProgress", "done"],
+      };
+    }
+
     return await Flight.findOne({
-      where: {
-        id,
-        status: "pending",
-      },
+      where: whereClause,
     });
   }
 
