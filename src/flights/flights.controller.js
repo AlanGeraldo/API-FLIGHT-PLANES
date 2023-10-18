@@ -11,7 +11,7 @@ const cityService = new CityService();
 const ticketService = new TicketService();
 
 export const findAllFlights = catchAsync(async (req, res, next) => {
-  const flight = await flightService.findAllFlights();
+  const flight = await flightService.findAllWithAllData();
   return res.json(flight);
 });
 

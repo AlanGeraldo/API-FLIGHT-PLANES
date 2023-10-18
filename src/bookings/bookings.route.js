@@ -1,9 +1,11 @@
 import { Router } from "express";
 import {
-    createBooking,
+    createBooking, findAllBooking,
 } from './bookings.controller.js'
 import { restricTo } from "../auth/auth.middleware.js";
 
 export const router = Router();
 
-router.route("/").post(restricTo('developer', 'receptionist'), createBooking);
+router.route("/")
+.get(findAllBooking)
+.post(restricTo('developer', 'receptionist'), createBooking);

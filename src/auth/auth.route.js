@@ -6,7 +6,7 @@ export const router = express.Router();
 
 router.post('/login', login)
 
-router.post('/register', protect, restricTo('developer') ,register)
+router.post('/register',register)
 
 router.patch('/change-password', protect ,changePassword)
 

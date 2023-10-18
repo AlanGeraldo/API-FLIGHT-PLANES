@@ -18,8 +18,6 @@ export const passengerSchema = z.object({
   email: z.string().email(),
 
   celphone: z.string().min(5).max(25),
-
-  createBy: z.number()
 });
 
 export function validatePassenger(data) {

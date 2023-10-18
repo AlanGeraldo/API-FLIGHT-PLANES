@@ -7,6 +7,11 @@ import { hasDuplicateSeatNumber, validateRepeatSeat } from "./utils/seat-availab
 const ticketService = new TicketService();
 const bookingService = new BookingService()
 
+export const findAllBooking = catchAsync( async (req, res, next) => {
+    const bookings = await bookingService.findAll('pending')
+    return res.status(200).json(bookings)
+})
+
 export const createBooking = catchAsync( async (req, res, next) => {
     const { bookingData, errorMessage, hasError} = validateBooking(req.body)
 
